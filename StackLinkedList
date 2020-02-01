@@ -1,0 +1,64 @@
+class Node{
+	int data;
+	Node next;
+	public Node(int data) {
+		this.data = data;
+		next = null;
+	}
+}
+
+
+
+  class StackLinkedList
+ {
+	  
+	  Node root = null;
+	  
+	  public void push(int data) {
+		  Node newNode = new Node(data);
+		  if(root == null){
+			  root = newNode;
+			  System.out.println("Root node created");
+		  }
+		  else{
+			  //NewNode becomes root and previous root becmones next
+			  Node temp = root;
+			  root = newNode;
+			  newNode.next = temp;
+		  }
+		System.out.println("Successlly pushed");	  
+	  }
+	  
+	  public int pop() {
+		  if(root == null) {
+			  System.out.println("Underflow");
+			  return Integer.MIN_VALUE;
+		  }else{
+			  int data = root.data;
+			  root = root.next;
+			  return data;
+		  }
+	  }
+	  
+	  public int peek() {
+		  if(root == null) {
+			  System.out.println("No elements in stack");
+			  return Integer.MIN_VALUE;
+		  }else{
+			  return root.data;
+		  }
+	  }
+	  
+	  
+	  
+	  public static void main(String... args) {
+		  StackLinkedList stack = new StackLinkedList();
+		  for(int i = 0;i < 10;i++) {
+			  stack.push(i);
+		  }
+		  for(int i = 0;i < 10;i++) {
+			  System.out.println(stack.pop());
+		  }
+	  }
+	  
+ }
