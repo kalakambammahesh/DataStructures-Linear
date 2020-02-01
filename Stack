@@ -1,0 +1,51 @@
+
+//Error class
+
+class StackError extends Exception{
+    public StackError(String message) {
+        super(message)
+    }
+}
+
+
+//Stack Implementation
+
+public class Stack{
+    
+    public static int[] arr = new int[5];
+    public static int top = -1;
+    
+    public Stack(int k) {
+        
+    }
+    
+    
+    public void push(int n) {
+        if(top > 9) {
+            throw new StackError("Stack Overflow Error");
+        } else{
+            arr[++top] = n;
+        }
+        
+    }
+    
+    public void pop() {
+        if(top < 0)
+            throw new StackError("Stack Underflow Error")
+        return arr[top--];
+    }
+    
+    public int size(){
+        return top;
+    }
+    
+    public static void main(String... args) {
+        Stack stack = new Stack();
+        for(int i = 0;i < 5;i++) {
+            stack.push(1)
+        }
+        for(int i = 0;i < 5;i++) {
+            System.out.println(stack.pop());
+        }
+    }
+}
