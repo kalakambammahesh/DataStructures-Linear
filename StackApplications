@@ -1,0 +1,85 @@
+class InFixToPost{
+	
+	public static boolean isOperator(char c) {
+		if(c == '+' || c == '-' || c == '*' || c == '/') return true;
+		return false;
+	}
+	
+	public int isPrec(char o1) {
+		switch(o1){
+		case '*':
+		case '/':
+			return 2;
+		case '+':
+		case '-':
+			return 1;
+		case '^':
+			return 3;
+		}
+		return -1;
+	}
+	
+	public String infixToPost(String exp) {
+		int len = exp.length();
+		char[] expArr = exp.toCharArray();
+		Stack<Character> stack = new Stack();
+		String result = "";
+		for(int i = 0;i < len;i++) {
+			if(Character.isLetterOrDigit(expArr[i])){
+				result += expArr[i];
+			}else if(expArr[i] == '('){
+				stack.push('(');
+			}else if(expArr[i] == ')'){
+				while(!stack.isEmpty() && stack.peek() != '('){
+					result += stack.pop();
+				}
+				while(!stack.isEmpty()) {
+					stack.pop();
+				}
+			}else {
+				while(isOperator(expArr[i]) && !stack.isEmpty() && (isPrec(expArr[i]) <= isPrec(stack.peek()))) {
+					if(stack.peek() != '(') {
+						result += stack.pop();
+					}else return "Invalid Expression";
+				}
+				stack.push(expArr[i]);
+			}
+		}
+		while(stack.size() > 0) {
+			result += stack.pop();
+		}
+		
+		return result;
+	}
+}
+
+class InfixToPrefix{
+	//Infix to prefix;
+	public String infixToPrefix(String str) {
+		 InFixToPost obj = new InFixToPost();
+		 String res = obj.infixToPost(str);
+		 StringBuffer sb = new StringBuffer(res);
+		 res = sb.reverse().toString();
+		 System.out.println(res);
+		 return res;
+	}
+}
+
+class PostFixToInfix{
+	public String postFixToInfix(String exp) {
+		Stack<String> stack = new Stack();
+		String result = "";
+		int len = exp.length();
+		for(int i = 0;i < len;i++) {
+			if(Character.isLetterOrDigit(exp.charAt(i))) {
+				stack.push(exp.charAt(i) + "");
+			}else {
+				String op1 = stack.pop();
+				String op2 = stack.pop();
+				stack.push("(" + op2 + exp.charAt(i) + op1 + ")");
+				
+			}
+		}
+		return stack.peek();
+	}
+}
